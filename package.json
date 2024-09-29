@@ -1,0 +1,24 @@
+{
+  "name": "project-danceacademy",
+  "version": "1.0.0",
+  "description": "\"Creating Best Dance Academy Website to Learn & Dance\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaidSafwan/Project-DanceAcademy.git"
+  },
+  "author": "Said",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SaidSafwan/Project-DanceAcademy/issues"
+  },
+  "homepage": "https://github.com/SaidSafwan/Project-DanceAcademy#readme",
+  "dependencies": {
+    "express": "^4.21.0",
+    "i": "^0.3.7",
+    "pug": "^3.0.3"
+  }
+}
