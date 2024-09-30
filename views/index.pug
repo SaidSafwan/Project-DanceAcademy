@@ -5,7 +5,21 @@ html
     style
       include ../static/style.css
   body
-    h1 My Site
-    p Welcome to my super lame site.
+    nav#navbar 
+        ul 
+            li #[a(href = "/") Home]
+            li #[a(href = "/") About]
+            li #[a(href = "/") Services]
+            li #[a(href = "/") Class Info]
+            li #[a(href = "/") Contact Us]
+    
+    section#IntroSection 
+        div   Welcome To Said's Dance Academy 
+        div  
+            p Where passion and movement unite
+    section#SponserSection 
+        h2 Our Sponser
+    footer#footer
+        p copyright &copy; All Right Reserved
     script
       include ../static/index.js
