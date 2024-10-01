@@ -8,8 +8,9 @@
 }
 
 #navbar {
-    background-color: yellow;
-    padding: 17px;
+    /* background-color: yellow; */
+    background-color: rgba(248, 80, 80, 0.792);
+    padding: 7px 17px;
     font-family: "Montserrat";
     position: sticky;
     top: 0;
@@ -20,7 +21,22 @@
 #navbar ul {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+#navbar ul #logo {
+    display: flex;
+    align-items: center;
+    margin: 0px 7px;
+    margin-right: 7px;
+    align-items: center;
+    margin-right: 52px;
+}
+
+#navbar ul #logo img {
+    height: 50px;
+    width: 60px;
 }
 
 #navbar ul li {
@@ -34,16 +50,21 @@
     padding: 13px 22px;
     font-size: 19px;
 }
+#navbar ul li a:hover {
+    color: white;
+}
+
 
 #IntroSection {
     color: black;
+    text-shadow: 0px 0px 2px white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: "Noto Serif", serif;
-    font-weight: bold;
-    font-size: 40px;
+    font-weight: 1000;
+  font-size: 48px;
     height: 400px;
 }
 
@@ -54,23 +75,51 @@
     width: 100%;
     position: absolute;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.75;
 }
 
 p {
-    font-size: 20px;
+    font-size: 24px;
+    text-shadow: 0px 0px 2px white;
 }
 
 #MissionSection {
     height: 300px;
-    background-color: lightsalmon;
+    /* background-color: lightsalmon; */
+    background-color: rgba(248, 80, 80, 0.792);
     text-align: center;
     font-family: "Noto Serif", serif;
+}
+
+.card-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-img {
+    height: 134px;
+    padding: 0 9px;
+    margin: 5px 9px;
+}
+
+.card-img img {
+    height: inherit;
+}
+
+.card-content {
+    padding: 2px 8px;
+    height: 91px;
+}
+
+.card-content p {
+    font-size: 19px;
 }
 
 #MissionSection h2 {
     padding: 10px;
 }
+
 #MissionSection h3 {
     margin: 10px;
 }
@@ -79,35 +128,61 @@ p {
     width: 30%;
     border: 2px solid black;
     border-radius: 27px;
-    background-color: bisque;
+    background-color: lightpink;
     height: 220px;
     display: inline-block;
     margin: 8px 12px;
+    font-family: "Noto Serif", serif;
+}
+
+.card h3 {
+    margin-top: 20px;
 }
 
 #SponserSection {
-    height: 300px;
-    background-color: yellow;
+    height: 255px;
+    background-color: rgba(192, 45, 45, 0.792);
     text-align: center;
     font-family: "Noto Serif", serif;
 }
 
 #SponserSection h2 {
-    padding: 10px;
+    padding-top: 24px;
 }
+
+#sponsers {
+    height: 150px;
+    width: 1200px;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.spImage {
+    height: 80%;
+    margin: 0px auto;
+}
+
+.small-sp{
+    height: 50%;
+}
+.big-sp{
+    height: 114%;
+}
+
 
 #footer {
     height: 50px;
     background-color: black;
-    font-family: "Noto Serif", serif;
-    /* display: flex;
+    display: flex;
     justify-content: center;
-    align-items: center; */
+    align-items: center;
 }
 
 footer p {
-    color: white;
+    font-family: "Noto Serif", serif;
     font-size: 15px;
-    text-align: center;
-    padding-top: 10px;
+    color: white;
 }

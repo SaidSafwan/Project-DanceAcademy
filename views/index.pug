@@ -6,12 +6,15 @@ html
       include ../static/style.css
   body
     nav#navbar 
-        ul 
-            li #[a(href = "/") Home]
-            li #[a(href = "/") About]
-            li #[a(href = "/") Services]
-            li #[a(href = "/") Class Info]
-            li #[a(href = "/") Contact Us]
+      ul
+        div#logo
+          img(src="/static/Images/logo1.png", alt="Image Not Found")
+          | SDA 
+        li #[a(href = "/") Home]
+        li #[a(href = "/") About]
+        li #[a(href = "/") Services]
+        li #[a(href = "/") Class Info]
+        li #[a(href = "/") Contact Us]
     
     section#IntroSection 
         div   Welcome To Said's Dance Academy 
@@ -20,14 +23,36 @@ html
     section#MissionSection 
         h2 Our Missions
         div.card
-            h3 Dance Perection 
+            h3 Dance Perfection
+            div.card-box
+              div.card-img
+                img(src="/static/Images/card1-img.png", alt="")
+              div.card-content
+                p Achieve flawless movements through focused practice and dedication.
         div.card
             h3 Dance the way you like 
+            div.card-box
+              div.card-img
+                img(src="/static/Images/card2-img.png", alt="")
+              div.card-content
+                p Express your unique style and individuality with every dance step.
         div.card
             h3 Teaching Expert 
+            div.card-box
+              div.card-img
+                img(src="/static/Images/card3-img.png", alt="")
+              div.card-content
+                p Learn from experienced instructors dedicated to refining your skills.
     section#SponserSection 
         h2 Our Sponser
+        div#sponsers
+          img(src="/static/Images/sponser4.png", alt="sponser image" Class="spImage small-sp")
+          img(src="/static/Images/sponser3.png", alt="sponser image" Class="spImage big-sp")
+          img(src="/static/Images/sponser2.png", alt="sponser image" Class="spImage")
+          img(src="/static/Images/sponser5.png", alt="sponser image" Class="spImage big-sp")
+          img(src="/static/Images/sponser6.png", alt="sponser image" Class="spImage small-sp")
+          img(src="/static/Images/sponser7.png", alt="sponser image" Class="spImage")
     footer#footer
-        p copyright &copy; All Right Reserved
+        p copyright &copy; 2024 SaidsDanceAadamy.com | All Right Reserved
     script
       include ../static/index.js
