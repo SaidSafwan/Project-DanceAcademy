@@ -1,0 +1,51 @@
+h2{
+    font-family: "Montserrat";
+    text-align: center;
+    font-size: 30px;
+}
+
+.myForm{
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 100%;
+}
+
+.myInput{
+    width: 40%;
+  padding: 8px;
+  margin: 6px;
+  border: 2px solid black;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+}
+.myInput:hover{
+  border: 2px solid #db5f5f;
+}
+.container{
+    margin: 19px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.btn{
+    padding: 7px 21px;
+  border: 2px solid #db5f5f;
+  border-radius: 10px;
+  margin: 10px;
+  color: white;
+  background-color: #f97474;
+  font-size: 19px;
+  font-family: "Montserrat";
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn:hover{
+    background-color: #db5f5f;
+    border: 2px solid #f97474;
+}
