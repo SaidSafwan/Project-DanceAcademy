@@ -11,6 +11,10 @@ block style
 block content
     div.container
         h2 This is Contact
+        // Display success or error message
+        //- if message
+          p.message #{message}
+
         form(action="/contact", method="post", class="myForm")
             input(type="text", class="myInput", name="name", placeholder="Enter Your Name")
             input(type="phone", class="myInput", name="phone", placeholder="Enter Your Phone Number")
