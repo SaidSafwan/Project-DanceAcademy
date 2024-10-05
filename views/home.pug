@@ -10,9 +10,9 @@ block style
     include ../static/style.css
 
 block content
-  //- Message Alert Section
-  if message
-    div.alert #{message}
+  //- Message Alert Section //- Display the first message if it exists
+  if message && message.length > 0
+    div.alert #{message[0]}  
   
   section#IntroSection 
     div Welcome To Said's Dance Academy 

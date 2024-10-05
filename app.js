@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose'); // Importing mongoose library
 const bodyParser = require("body-parser"); // For getting body data from requested Form
+const session = require('express-session');  // For session management
+const flash = require('connect-flash');      // For flash messages
 
 const app = express();  // Create an instance of the Express application
 const port = 3000;      // The app will listen on port 3000 (commonly used for HTTP requests)
@@ -27,6 +29,15 @@ const ContactSchema = new mongoose.Schema({
 // Compile schema into model
 const Contact = mongoose.model('Contact', ContactSchema);
 
+// Middleware for sessions and flash messages 
+app.use(session({
+    secret: 'mySuperSecretKey123!',  // Replace with a strong key
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use(flash());  // Initialize flash messages
+
 // Express Specific Stuff
 app.use('/static', express.static('static'));  // For serving static files
 app.use(express.urlencoded({ extended: true }));  // Updated body-parser to avoid deprecation warning
@@ -42,7 +53,8 @@ app.set('views', path.join(__dirname, 'views'));  // Set the views directory
 }); */
 
 app.get('/', (req, res) => {
-    const message = req.query.message;  // Get the message from query string
+    // const message = req.query.message;  // Get the message from query string 
+    const message = req.flash('message');  // Get the flash message  | to avoid display msg content on url
     res.status(200).render('home.pug', { message: message });  // Pass the message to the Pug template
 });
 
@@ -62,12 +74,25 @@ app.post('/contact', (req, res) => {
     }).catch(() => {
         res.status(500).render('contact.pug', { message: "Error saving data. Please try again." });
     }); */
-    contactData.save().then(() => {
+
+    //this promise code below was redirecting & parsing message through query string on url
+
+    /* contactData.save().then(() => {
         // Redirect to home with success message
         res.redirect('/?message=Your form has been successfully submitted');
     }).catch(() => {
         // Redirect to home with error message
         res.redirect('/?message=There was an error saving the form');
+    }); */
+
+    //this promise code below was redirecting & parsing message through flash
+
+    contactData.save().then(() => {
+        req.flash('message', 'Your form has been successfully submitted');  // Set flash message
+        res.redirect('/');  // Redirect to the homepage without query string
+    }).catch(() => {
+        req.flash('message', 'There was an error saving the form');
+        res.redirect('/');  // Redirect with the error flash message
     });
 });
 
