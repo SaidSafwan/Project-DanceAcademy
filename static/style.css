@@ -17,8 +17,9 @@
     /*keeping navbar sticky ,assigning top 0 is must*/
     font-weight: bold;
 }
+ /* Hide any alert div that has no content */
 .alert:empty {
-    display: none;  // Hide any alert div that has no content
+    display: none;  
 }
 
 #navbar ul {
