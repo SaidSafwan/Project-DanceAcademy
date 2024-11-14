@@ -1,0 +1,32 @@
+extends base.pug
+
+block style
+  style
+    include ../static/style.css
+    include ../static/userdata.css
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css")
+
+block content
+  div.container.mt-5.shadow-lg.p-5.mb-5.pt-1(style="width: 60%;")
+    h2 User Information
+
+
+    table.table
+      thead.table-dark
+        tr
+          th(scope="col") Name
+          th(scope="col") Phone
+          th(scope="col") Email
+          th(scope="col") Age
+          th(scope="col") Address
+          th(scope="col") Description
+
+      tbody
+        each user in users
+          tr
+            td= user.name
+            td= user.phone
+            td= user.email
+            td= user.age
+            td= user.address
+            td= user.desc
