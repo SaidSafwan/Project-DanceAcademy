@@ -1,0 +1,33 @@
+#navbar ul {
+    padding-left: 0 !important; /* Reset the padding applied by Bootstrap */
+    margin-bottom: 0rem !important; /* Reset the margin applied by Bootstrap */
+  }
+
+div h2{
+    text-align: center;
+    font-weight: bold;
+    /* font-size: 1.8rem; */
+    padding: 5px;
+}
+
+
+
+/* Footer styling */
+#footer {
+    height: 50px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    padding-top: 8px;
+    bottom: 0;
+}
+
+footer p {
+    font-family: "Noto Serif", serif;
+    font-size: 15px;
+    color: white;
+}

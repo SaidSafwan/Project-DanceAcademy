@@ -64,6 +64,17 @@ app.get('/contact', (req, res) => {
     res.status(200).render('contact.pug', params);
 });
 
+app.get('/userdata', async (req, res) => {
+    try {
+        const users = await Contact.find(); //To Fetch all user records from MongoDB
+        res.render('userdata.pug', { users }); // Pass users data to `userdata.pug`
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Error fetching user data. Please try again.");
+    }
+});
+
+
 // Handle POST request for contact form submission
 app.post('/contact', (req, res) => {
     var contactData = new Contact(req.body);  // Fetch data from contact form
