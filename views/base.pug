@@ -10,17 +10,21 @@ html
             div#logo
                 img(src="/static/Images/logo1.png", alt="Image Not Found")
                 | SDA 
-            li #[a(href = "/") Home]
-            li #[a(href = "/") About]
-            li #[a(href = "/") Services]
-            li #[a(href = "/") Class Info]
-            li #[a(href = "/contact") Contact Us]
-            li #[a(href="/userdata") User Info]
-            div.nav-right  <!-- New div for right-aligned buttons -->
-              a.btn(href="/login") Login
-              a.btn(href="/register") Register
+            li: a(href="/") Home
+            li: a(href="/") About
+            li: a(href="/") Services
+            li: a(href="/") Class Info
+            li: a(href="/contact") Contact Us
+            if user && user.role === 'admin'
+              li: a(href="/userdata") User Info
+            div.nav-right
+              if user
+                span Hi, #{user.username} <!-- Display username -->
+                a.btn(href="/logout") Logout <!-- Logout button -->
+              else
+                a.btn(href="/login") Login <!-- Login button -->
+                a.btn(href="/register") Register <!-- Register button -->
 
     block content
     footer#footer
-        p copyright &copy; 2024 SaidsDanceAadamy.com | All Right Reserved
-      
+        p copyright &copy; 2024 SaidsDanceAcademy.com | All Rights Reserved
