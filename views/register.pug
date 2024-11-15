@@ -1,0 +1,22 @@
+extends base.pug
+
+block scripts
+  script(src="../static/index.js")
+
+block style
+  style
+    include ../static/style.css
+    include ../static/register.css
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css")
+
+block content
+  if message
+    div.alert.alert-info #{message}
+
+  div.container.mt-5.shadow-lg.p-5.mb-5.pt-1(style="width: 60%;")
+    h2 Register
+    form(action="/register", method="post", class="register-form")
+      input(type="text", name="username", placeholder="Enter Username" required)
+      input(type="email", name="email", placeholder="Enter Email" required)
+      input(type="password", name="password", placeholder="Enter Password" required)
+      button(type="submit") Register
