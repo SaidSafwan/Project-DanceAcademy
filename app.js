@@ -29,6 +29,18 @@ const ContactSchema = new mongoose.Schema({
 // Compile schema into model
 const Contact = mongoose.model('Contact', ContactSchema);
 
+
+// User schema for registration
+const UserSchema = new mongoose.Schema({
+    username: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
+});
+
+// Compile schema into a model
+const User = mongoose.model('User', UserSchema);
+
 // Middleware for sessions and flash messages 
 app.use(session({
     secret: 'mySuperSecretKey123!',  // Replace with a strong key
@@ -52,6 +64,12 @@ app.set('views', path.join(__dirname, 'views'));  // Set the views directory
     res.status(200).render('home.pug', params);
 }); */
 
+app.get('/register', (req, res) => {
+    const params = {};
+    res.status(200).render('register.pug', params);
+});
+
+
 app.get('/', (req, res) => {
     // const message = req.query.message;  // Get the message from query string 
     const message = req.flash('message');  // Get the flash message  | to avoid display msg content on url
@@ -73,6 +91,36 @@ app.get('/userdata', async (req, res) => {
         res.status(500).send("Error fetching user data. Please try again.");
     }
 });
+
+// Handle POST request for User-Registration form submission
+app.post('/register', async (req, res) => {
+    try {
+        // Create a new user with data from the registration form
+        const newUser = new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password // For now, store the password as plain text (hashing recommended)
+        });
+
+        // Save the user in MongoDB
+        await newUser.save();
+
+        // Flash a success message
+        req.flash('message', 'Registration successful! You can now log in.');
+        res.redirect('/'); // Redirect to the homepage
+    } catch (error) {
+        console.error("Error registering user:", error);
+
+        // Handle unique email constraint or other errors
+        if (error.code === 11000) { // Duplicate key error
+            req.flash('message', 'Email is already registered. Please use another email.');
+        } else {
+            req.flash('message', 'Registration failed. Please try again.');
+        }
+        res.redirect('/register'); // Redirect back to the registration page
+    }
+});
+
 
 
 // Handle POST request for contact form submission
