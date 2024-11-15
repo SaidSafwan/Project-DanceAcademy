@@ -1,0 +1,94 @@
+/* Centering the login form within a container */
+.login-form {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+}
+
+/* Styling the input fields */
+.login-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Styling the submit button */
+.login-form button {
+    padding: 10px;
+    background-color: #007bff; /* Bootstrap blue for login */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+.login-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling the container and header */
+.container h2 {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1.8rem;
+}
+
+/* Flash message styling */
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Adjust container layout for better alignment */
+.container {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 30px;
+    background: #f9f9f9;
+}
+
+
+
+#navbar ul {
+    padding-left: 0 !important; /* Reset the padding applied by Bootstrap */
+    margin-bottom: 0rem !important; /* Reset the margin applied by Bootstrap */
+  }
+
+div h2{
+    text-align: center;
+    font-weight: bold;
+    /* font-size: 1.8rem; */
+    padding: 5px;
+}
+
+
+/* Footer styling */
+#footer {
+    height: 50px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    padding-top: 8px;
+    bottom: 0;
+}
+
+footer p {
+    font-family: "Noto Serif", serif;
+    font-size: 15px;
+    color: white;
+}
