@@ -1,0 +1,21 @@
+extends base.pug
+
+block scripts
+  script(src="../static/index.js")
+
+block style
+  style
+    include ../static/style.css
+    include ../static/login.css
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css")
+
+block content
+  if message
+    div.alert.alert-info #{message}
+
+  div.container.mt-5.shadow-lg.p-5.mb-5.pt-1(style="width: 60%;")
+    h2 Login
+    form(action="/login", method="post", class="login-form")
+      input(type="text", name="usernameOrEmail", placeholder="Enter Username or Email" required)
+      input(type="password", name="password", placeholder="Enter Password" required)
+      button(type="submit") Login
