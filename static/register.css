@@ -15,7 +15,8 @@
 
 .register-form button {
     padding: 10px;
-    background-color: #f85050;
+    /* background-color: #f85050; */
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -23,6 +24,9 @@
     cursor: pointer;
 }
 
+.register-form button:hover {
+    background-color: #0056b3;
+}
 
 #navbar ul {
     padding-left: 0 !important; /* Reset the padding applied by Bootstrap */
