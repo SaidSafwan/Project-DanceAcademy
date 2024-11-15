@@ -5,6 +5,7 @@ const mongoose = require('mongoose'); // Importing mongoose library
 const bodyParser = require("body-parser"); // For getting body data from requested Form
 const session = require('express-session');  // For session management
 const flash = require('connect-flash');      // For flash messages
+const bcrypt = require('bcrypt'); // Import bcrypt
 
 const app = express();  // Create an instance of the Express application
 const port = 3000;      // The app will listen on port 3000 (commonly used for HTTP requests)
@@ -32,7 +33,7 @@ const Contact = mongoose.model('Contact', ContactSchema);
 
 // User schema for registration
 const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     createdAt: { type: Date, default: Date.now }
@@ -65,10 +66,9 @@ app.set('views', path.join(__dirname, 'views'));  // Set the views directory
 }); */
 
 app.get('/register', (req, res) => {
-    const params = {};
-    res.status(200).render('register.pug', params);
+    const message = req.flash('message'); // Get flash message
+    res.status(200).render('register.pug', { message }); // Pass message to the Pug template
 });
-
 
 app.get('/', (req, res) => {
     // const message = req.query.message;  // Get the message from query string 
@@ -78,8 +78,8 @@ app.get('/', (req, res) => {
 
 
 app.get('/contact', (req, res) => {
-    const params = {};
-    res.status(200).render('contact.pug', params);
+    const message = req.flash('message');
+    res.status(200).render('contact.pug', {message});
 });
 
 app.get('/userdata', async (req, res) => {
@@ -93,34 +93,132 @@ app.get('/userdata', async (req, res) => {
 });
 
 // Handle POST request for User-Registration form submission
+// app.post('/register', async (req, res) => {
+//     try {
+//         // Create a new user with data from the registration form
+//         const newUser = new User({
+//             username: req.body.username,
+//             email: req.body.email,
+//             password: req.body.password // For now, store the password as plain text (hashing recommended)
+//         });
+
+//         // Save the user in MongoDB
+//         await newUser.save();
+
+//         // Flash a success message
+//         req.flash('message', 'Registration successful! You can now log in.');
+//         res.redirect('/'); // Redirect to the homepage
+//     } catch (error) {
+//         console.error("Error registering user:", error);
+
+//         // Handle unique email constraint or other errors
+//         if (error.code === 11000) { // Duplicate key error
+//             req.flash('message', 'Email is already registered. Please use another email.');
+//         } else {
+//             req.flash('message', 'Registration failed. Please try again.');
+//         }
+//         res.redirect('/register'); // Redirect back to the registration page
+//     }
+// });
+
+// Handle POST request for User-Registration form submission with bcrypt (for creating hashed password)
 app.post('/register', async (req, res) => {
+    const { username, email, password } = req.body;
     try {
-        // Create a new user with data from the registration form
-        const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password // For now, store the password as plain text (hashing recommended)
+        // Check for existing user with duplicate username or email
+        const existingUser = await User.findOne({
+            $or: [
+                { username: username },
+                { email: email }
+            ]
         });
 
-        // Save the user in MongoDB
+        if (existingUser) {
+            // Check which field is already taken and set appropriate flash message
+            if (existingUser.username === username) {
+                req.flash('message', 'Username is already taken. Please choose another.');
+            } else if (existingUser.email === email) {
+                req.flash('message', 'Email is already registered. Please use another email.');
+            }
+            return res.redirect('/register'); // Redirect back to the registration page
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create and save the new user
+        const newUser = new User({
+            username: username,
+            email: email,
+            password: hashedPassword
+        });
         await newUser.save();
 
-        // Flash a success message
+        // Success message
         req.flash('message', 'Registration successful! You can now log in.');
-        res.redirect('/'); // Redirect to the homepage
+        res.redirect('/login');
     } catch (error) {
-        console.error("Error registering user:", error);
+        console.error("Error during registration:", error);
 
-        // Handle unique email constraint or other errors
-        if (error.code === 11000) { // Duplicate key error
-            req.flash('message', 'Email is already registered. Please use another email.');
-        } else {
-            req.flash('message', 'Registration failed. Please try again.');
-        }
-        res.redirect('/register'); // Redirect back to the registration page
+        // Fallback message for unexpected errors
+        req.flash('message', 'Registration failed. Please try again.');
+        res.redirect('/register');
     }
 });
 
+
+// Render the login page
+app.get('/login', (req, res) => {
+    const message = req.flash('message');
+    res.render('login.pug', { message });
+});
+
+// app.get('/login', (req, res) => {
+//     const params = {};
+//     res.status(200).render('login.pug', params);
+// });
+
+// Handle login form submission
+app.post('/login', async (req, res) => {
+    try {
+        const { usernameOrEmail, password } = req.body;
+
+        // Find the user by username or email
+        const user = await User.findOne({
+            $or: [
+                { username: usernameOrEmail },
+                { email: usernameOrEmail }
+            ]
+        });
+
+        // If user is not found, redirect with an error message
+        if (!user) {
+            req.flash('message', 'Invalid username or email.');
+            return res.redirect('/login');
+        }
+
+        // Compare passwords (hashing recommended if used during registration)
+        // if (user.password !== password) {
+        //     req.flash('message', 'Invalid password.');
+        //     return res.redirect('/login');
+        // }
+
+        // Compare the entered password with the hashed password in the database
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            req.flash('message', 'Invalid password.');
+            return res.redirect('/login');
+        }
+
+        // If login is successful
+        req.flash('message', `Welcome back, ${user.username}!`);
+        return res.redirect('/'); // Redirect to the homepage or dashboard
+    } catch (error) {
+        console.error("Error during login:", error);
+        req.flash('message', 'An error occurred during login. Please try again.');
+        res.redirect('/login');
+    }
+});
 
 
 // Handle POST request for contact form submission
