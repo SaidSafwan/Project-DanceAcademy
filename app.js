@@ -81,7 +81,8 @@ app.get('/', (req, res) => {
 
 app.get('/contact', (req, res) => {
     const message = req.flash('message');
-    res.status(200).render('contact.pug', {message});
+    const user = req.session.user || null; // Pass user info if logged in
+    res.status(200).render('contact.pug', {message, user});
 });
 
 // app.get('/userdata', async (req, res) => {
@@ -250,7 +251,8 @@ function isAdmin(req, res, next) {
 app.get('/userdata', isAdmin, async (req, res) => {
     try {
         const users = await Contact.find(); //To Fetch all user records from MongoDB
-        res.render('userdata.pug', { users }); // Pass users data to `userdata.pug
+        const user = req.session.user || null; // Retrieve the logged-in user's session info
+        res.render('userdata.pug', { users, user }); // Pass users data to `userdata.pug | user : role
     } catch (error) {
         console.error("Error fetching user data:", error);
         res.status(500).send("Error fetching user data. Please try again.");
