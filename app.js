@@ -36,6 +36,7 @@ const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    role: { type: String, default: 'user' }, // Default role is 'user', admin role can be manually assigned
     createdAt: { type: Date, default: Date.now }
 });
 
@@ -73,7 +74,8 @@ app.get('/register', (req, res) => {
 app.get('/', (req, res) => {
     // const message = req.query.message;  // Get the message from query string 
     const message = req.flash('message');  // Get the flash message  | to avoid display msg content on url
-    res.status(200).render('home.pug', { message: message });  // Pass the message to the Pug template
+    const user = req.session.user || null; // Pass user info if logged in
+    res.status(200).render('home.pug', { message , user });  // Pass the message to the Pug template
 });
 
 
@@ -82,15 +84,16 @@ app.get('/contact', (req, res) => {
     res.status(200).render('contact.pug', {message});
 });
 
-app.get('/userdata', async (req, res) => {
-    try {
-        const users = await Contact.find(); //To Fetch all user records from MongoDB
-        res.render('userdata.pug', { users }); // Pass users data to `userdata.pug`
-    } catch (error) {
-        console.error("Error fetching user data:", error);
-        res.status(500).send("Error fetching user data. Please try again.");
-    }
-});
+// app.get('/userdata', async (req, res) => {
+//     try {
+//         const users = await Contact.find(); //To Fetch all user records from MongoDB
+//         res.render('userdata.pug', { users }); 
+//     } catch (error) {
+//         console.error("Error fetching user data:", error);
+//         res.status(500).send("Error fetching user data. Please try again.");
+//     }
+// });
+
 
 // Handle POST request for User-Registration form submission
 // app.post('/register', async (req, res) => {
@@ -210,6 +213,9 @@ app.post('/login', async (req, res) => {
             return res.redirect('/login');
         }
 
+        // Store user details in session
+        req.session.user = { id: user._id, role: user.role, username: user.username };
+
         // If login is successful
         req.flash('message', `Welcome back, ${user.username}!`);
         return res.redirect('/'); // Redirect to the homepage or dashboard
@@ -220,6 +226,36 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error("Logout error:", err);
+            req.flash('message', 'Error logging out. Please try again.');
+            return res.redirect('/');
+        }
+        res.redirect('/'); // Redirect to login page after logout
+    });
+});
+
+// Middleware to check if user is logged in and is an admin
+function isAdmin(req, res, next) {
+    if (req.session.user && req.session.user.role === 'admin') {
+        return next(); // Proceed to the route
+    }
+    req.flash('message', 'Access denied! Admins only.');
+    res.redirect('/login'); // Redirect to login if not admin
+}
+
+//Protect the "Contact Info" Route:
+app.get('/userdata', isAdmin, async (req, res) => {
+    try {
+        const users = await Contact.find(); //To Fetch all user records from MongoDB
+        res.render('userdata.pug', { users }); // Pass users data to `userdata.pug
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        res.status(500).send("Error fetching user data. Please try again.");
+    }
+});
 
 // Handle POST request for contact form submission
 app.post('/contact', (req, res) => {
