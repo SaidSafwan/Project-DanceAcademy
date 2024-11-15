@@ -58,6 +58,29 @@
     color: white;
 }
 
+/* Position the login/register buttons to the right of the navbar */
+.nav-right {
+    margin-left: auto;  /* Pushes the buttons to the right */
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    align-items: center;
+}
+
+/* Style for the login and register buttons */
+.nav-right .btn {
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    background-color: #f85050; /* Adjust color as needed */
+}
+
+.nav-right .btn:hover {
+    background-color: #f86060; /* Change for a hover effect */
+}
+
 
 #IntroSection {
     color: black;
