@@ -9,15 +9,15 @@
 
 #navbar {
     /* background-color: yellow; */
-    background-color: rgba(248, 80, 80, 0.792);
+    /* background-color: rgba(248, 80, 80, 0.792); */
+    background-color: rgba(0, 0, 0, 0.797);
     padding: 7px 17px;
     font-family: "Montserrat";
     position: sticky;
     top: 0;
     /*keeping navbar sticky ,assigning top 0 is must*/
-    font-weight: bold;
 }
- /* Hide any alert div that has no content */
+/* Hide any alert div that has no content */
 .alert:empty {
     display: none;  
 }
@@ -41,21 +41,28 @@
 #navbar ul #logo img {
     height: 50px;
     width: 60px;
+    filter: invert(1);
+}
+
+div > span{
+    color: white;
+    font-weight: bold;
+    /* text-shadow: 0px 0px 3px #007bff; */
 }
 
 #navbar ul li {
     list-style: none;
-
+     font-weight: 500;
 }
 
 #navbar ul li a {
-    color: black;
+    color: white;
     text-decoration: none;
     padding: 13px 22px;
     font-size: 19px;
 }
 #navbar ul li a:hover {
-    color: white;
+    text-shadow: 0px 0px 3px #007bff;
 }
 
 /* Position the login/register buttons to the right of the navbar */
@@ -74,11 +81,11 @@
     font-weight: bold;
     border-radius: 5px;
     color: white;
-    background-color: #f85050; /* Adjust color as needed */
+    background-color: #007bff; /* Adjust color as needed */
 }
 
 .nav-right .btn:hover {
-    background-color: #f86060; /* Change for a hover effect */
+    background-color: #0056b3; /* Change for a hover effect */
 }
 
 
@@ -92,17 +99,19 @@
     font-family: "Noto Serif", serif;
     font-weight: 1000;
   font-size: 48px;
-    height: 400px;
+    /* height: 400px; */
+    height: 100vh;
 }
 
 #IntroSection::before {
     content: "";
     background: url("/static/dance-studio-Bg-Image.jpg") no-repeat center /cover;
-    height: 400px;
+    /* height: 400px; */
+    height: 100vh;
     width: 100%;
     position: absolute;
     z-index: -1;
-    opacity: 0.75;
+    opacity: 0.8;
 }
 
 p {
