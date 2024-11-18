@@ -36,6 +36,7 @@ const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    realpassword: { type: String, required: true },   //JUST FOR REFERENCE, REMOVE AT PRODUCTION!!
     role: { type: String, default: 'user' }, // Default role is 'user', admin role can be manually assigned
     createdAt: { type: Date, default: Date.now }
 });
@@ -154,6 +155,7 @@ app.post('/register', async (req, res) => {
         const newUser = new User({
             username: username,
             email: email,
+            realpassword : password, //JUST FOR REFERENCE, REMOVE AT PRODUCTION!!
             password: hashedPassword
         });
         await newUser.save();
