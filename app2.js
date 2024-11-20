@@ -20,11 +20,18 @@ const port = process.env.PORT || 3000;      // The app will listen on port 3000 
 
 // MongoDB Stuff
 // Open a connection to the DanceAcademy database on your local MongoDB instance
-main().catch(err => console.log(err));
-async function main() {
-//  await mongoose.connect(process.env.MongodbURL);
-    await mongoose.connect(process.env.DB_URL);
-}
+
+(async () => {
+    try {
+        await mongoose.connect(process.env.DB_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('MongoDB connected successfully!');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+    }
+})();
 
 // Creating schema
 const ContactSchema = new mongoose.Schema({
