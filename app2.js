@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose'); // Importing mongoose library
-const bodyParser = require("body-parser"); // For getting body data from requested Form
+// const bodyParser = require("body-parser"); // For getting body data from requested Form
 // const session = require('express-session');  // For session management | instead will use JWT  
 // const flash = require('connect-flash');      // For flash messages | Inssted will use jwt
 const bcrypt = require('bcrypt'); // Import bcrypt
@@ -22,7 +22,8 @@ const port = process.env.PORT || 3000;      // The app will listen on port 3000 
 // Open a connection to the DanceAcademy database on your local MongoDB instance
 main().catch(err => console.log(err));
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/DanceAcademy');
+//  await mongoose.connect(process.env.MongodbURL);
+    await mongoose.connect(process.env.DB_URL);
 }
 
 // Creating schema
