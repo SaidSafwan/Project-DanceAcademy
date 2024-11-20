@@ -21,19 +21,12 @@ const port = process.env.PORT || 3000;      // The app will listen on port 3000 
 // MongoDB Stuff
 // Open a connection to the DanceAcademy database on your local MongoDB instance
 
-(async () => {
-    try {
-        await mongoose.connect(process.env.DB_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log("Connected to MongoDB successfully!");
-        process.exit(0);
-    } catch (err) {
-        console.error("Failed to connect to MongoDB:", err);
-        process.exit(1);
-    }
-})();
+const dbUrl = process.env.DB_URL;
+
+// Connect to MongoDB Atlas
+mongoose.connect(dbUrl)
+  .then(() => console.log('Connected to MongoDB Atlas successfully'))
+  .catch((err) => console.error('Error connecting to MongoDB Atlas:', err));
 
 // Creating schema
 const ContactSchema = new mongoose.Schema({
