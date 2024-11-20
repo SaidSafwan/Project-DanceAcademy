@@ -1,5 +1,4 @@
 // Import the Express module and create an app instance
-require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose'); // Importing mongoose library
@@ -9,6 +8,7 @@ const mongoose = require('mongoose'); // Importing mongoose library
 const bcrypt = require('bcrypt'); // Import bcrypt
 const jwt = require('jsonwebtoken'); // JWT for authentication
 // const { readdir } = require('fs/promises');
+require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
 
@@ -27,9 +27,11 @@ const port = process.env.PORT || 3000;      // The app will listen on port 3000 
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        console.log('MongoDB connected successfully!');
-    } catch (error) {
-        console.error('MongoDB connection error:', error);
+        console.log("Connected to MongoDB successfully!");
+        process.exit(0);
+    } catch (err) {
+        console.error("Failed to connect to MongoDB:", err);
+        process.exit(1);
     }
 })();
 
