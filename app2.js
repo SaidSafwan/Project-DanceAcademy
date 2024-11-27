@@ -23,10 +23,16 @@ const port = process.env.PORT || 3000;      // The app will listen on port 3000 
 
 const dbUrl = process.env.DB_URL;
 
-// Connect to MongoDB Atlas
-mongoose.connect(dbUrl)
-  .then(() => console.log('Connected to MongoDB Atlas successfully'))
-  .catch((err) => console.error('Error connecting to MongoDB Atlas:', err));
+if (!dbUrl) {
+  console.error("MongoDB connection string (DB_URL) is undefined!");
+  process.exit(1); // Exit if DB_URL is not defined
+}
+
+mongoose
+  .connect(dbUrl)
+  .then(() => console.log("Connected to MongoDB Atlas successfully"))
+  .catch((err) => console.error("Error connecting to MongoDB Atlas:", err));
+
 
 // Creating schema
 const ContactSchema = new mongoose.Schema({
