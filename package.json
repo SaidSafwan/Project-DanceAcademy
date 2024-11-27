@@ -4,6 +4,7 @@
   "description": "\"Creating Best Dance Academy Website to Learn & Dance\"",
   "main": "app.js",
   "scripts": {
+    "start": "node app2.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
